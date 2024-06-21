@@ -1,0 +1,13 @@
+extends layout
+block content 
+
+        <form action="/user" method="post">
+        p 
+        select(name='dropDown', id='')
+            each item in items
+                    option(=item.id) #{value=item.id + ' '}#{value=item.name}
+
+        buttons
+            input(type='submit', value='click')
+
+        hr
