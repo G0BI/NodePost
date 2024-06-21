@@ -153,15 +153,59 @@ app.post("/user", function(req, res) {
 });
 
 // PUT API
-//  app.put("/api/user/:id", function(req , res){
-//                 var query = "UPDATE [user] SET Name= " + req.body.Name  +  " , Email=  " + req.body.Email + "  WHERE Id= " + req.params.id;
-//                 executeQuery (res, query);
-// });
+ app.put("/user/:id", function(req , res){
+                var query = "UPDATE Studentinfo SET Name = '" + req.body.Name + "'  WHERE ID = " + req.params.id;
+                sql.connect(dbConfig, function(err) {
+                    if (err) console.log(err);
+            
+                    // create request object
+                    var request = new sql.Request();
+                    request.input("Name", sql.VarChar, req.body.Name)
+                    request.input("ID", sql.Int, req.params.id)
+                    request.query(query, function(err, recordset) {
+                        if (err) {
+                            console.log(err) 
+                        } else {
+                            res.status(200).send("user updated")
+                        }
+                    }) 
+                });
+});
 
 // // DELETE API
-//  app.delete("/api/user /:id", function(req , res){
-//                 var query = "DELETE FROM [user] WHERE Id=" + req.params.id;
+//  app.delete("/user /:id", function(req , res){
+//                 var query = "DELETE FROM Studentinfo WHERE ID =" + req.params.id;
 //                 executeQuery (res, query);
+//                 sql.connect(dbConfig, function(err) {
+//                     if (err) console.log(err);
+            
+//                     // create request object
+//                     var request = new sql.Request();
+            
+//                     // query to the database and get the records
+//                     request.query(query, function(err, recordset) {
+//                         if (err) console.log(err);
+            
+//                         for(let [key, value] of Object.entries(recordset)) {
+//                             // console.log('key: ' + key.json);
+//                             if(key === "recordset") {
+//                                 items = [];
+            
+//                                 for(var i = 0; i < value.length; i++) {
+//                                     item = [];
+//                                     // console.log('id: ' + value[i].ID + ' name: ' + value[i].Name + ' age: ' + value[i].Age);
+//                                     item['id'] = value[i].ID;
+//                                     item['name'] = value[i].Name;
+//                                     item['age'] = value[i].Age;
+//                                     items.push(item);
+//                                 }
+//                             } else {
+//                                 // console.log('not a record');
+//                             }
+//                         }
+//                         console.log('------------------------');
+//                         res.render('index', { title: 'items', items: items});
+//                         res.end;
+//                     });
+//                 });
 // });
-
-//});
