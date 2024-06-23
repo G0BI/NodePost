@@ -8,6 +8,7 @@ const path = require('path');
 var form = require('multer');
 const { json } = require("body-parser");
 const { title } = require("process");
+const methodOverride = require('method-override');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 var urlencodedParser = bodyParser.urlencoded({ extended: false});
 app.use(bodyParser.text({ type: 'text/html'}));
+app.use(methodOverride('_method'));
 
 app.use(cors({
     origin: "*",
@@ -173,39 +175,22 @@ app.post("/user", function(req, res) {
 });
 
 // // DELETE API
-//  app.delete("/user /:id", function(req , res){
-//                 var query = "DELETE FROM Studentinfo WHERE ID =" + req.params.id;
-//                 executeQuery (res, query);
-//                 sql.connect(dbConfig, function(err) {
-//                     if (err) console.log(err);
+ app.delete("/user/:id", function(req , res){
+                var query = "DELETE FROM Studentinfo WHERE ID = " + req.params.id;
+                sql.connect(dbConfig, function(err) {
+                    if (err) console.log(err);
             
-//                     // create request object
-//                     var request = new sql.Request();
+                    // create request object
+                    var request = new sql.Request();
+                    request.input("ID", sql.Int, req.params.id)
             
-//                     // query to the database and get the records
-//                     request.query(query, function(err, recordset) {
-//                         if (err) console.log(err);
-            
-//                         for(let [key, value] of Object.entries(recordset)) {
-//                             // console.log('key: ' + key.json);
-//                             if(key === "recordset") {
-//                                 items = [];
-            
-//                                 for(var i = 0; i < value.length; i++) {
-//                                     item = [];
-//                                     // console.log('id: ' + value[i].ID + ' name: ' + value[i].Name + ' age: ' + value[i].Age);
-//                                     item['id'] = value[i].ID;
-//                                     item['name'] = value[i].Name;
-//                                     item['age'] = value[i].Age;
-//                                     items.push(item);
-//                                 }
-//                             } else {
-//                                 // console.log('not a record');
-//                             }
-//                         }
-//                         console.log('------------------------');
-//                         res.render('index', { title: 'items', items: items});
-//                         res.end;
-//                     });
-//                 });
-// });
+                    // query to the database and get the records
+                    request.query(query, function(err, recordset) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.status(200).send("user deleted")
+                        }
+                    });
+                });
+});
