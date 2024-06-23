@@ -1,0 +1,12 @@
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px;
+    
+}
+
+body {
+    background-color: floralwhite;
+    color: midnightblue;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

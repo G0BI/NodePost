@@ -23,6 +23,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false});
 app.use(bodyParser.text({ type: 'text/html'}));
 app.use(methodOverride('_method'));
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(cors({
     origin: "*",
     methods: ['GET', 'POST']
