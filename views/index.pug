@@ -11,3 +11,25 @@ block content
             input(type='submit', value='click')
 
         hr
+
+block update 
+
+        h4 Update
+        <form action="/user/2?_method=PUT" method="post">
+        label(for='nameText') Name: 
+        input(type='text', id='nameText', name='nameText')
+        buttons
+                input(type='submit', value='Update')
+        
+        hr
+
+block delete 
+
+        h4 Delete
+        p
+        select(name='deleteDrop', id='')
+                each item in items
+                        option(=item.id) #{value=item.id}
+
+        buttons 
+                input(type='submit', value='Delete')
